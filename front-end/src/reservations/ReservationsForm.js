@@ -42,20 +42,20 @@ function ReservationForm(){
               type="tel"
               name="mobile_number"
               id="mobile_number"
-              placeholder="(571)-456-7890"
+              placeholder="5714567890"
               className="form-control" required
             />
           </div>
           <div className="col-md-4 col-lg-4 mb-3">
-            <label htmlFor="guests" className="form-label">
+            <label htmlFor="people" className="form-label">
               Number of Guests
             </label>
             <input
               type="number"
               min="1"
               max="100"
-              name="guests"
-              id="guests"
+              name="people"
+              id="people"
               placeholder="1"
               className="form-control" required
             />
