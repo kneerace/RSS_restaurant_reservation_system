@@ -71,7 +71,7 @@ function ReservationForm(){
               type="date"
               name="reservation_date"
               id="reservation_date"
-              placeholder="MM/DD/YYYY"
+              placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}"
               className="form-control" required
             />
           </div>
@@ -83,7 +83,7 @@ function ReservationForm(){
               type="time"
               name="reservation_time"
               id="reservation_time"
-              placeholder="12:00"
+              placeholder="HH:MM" pattern="[0-9]{2}:[0-9]{2}"
               className="form-control" required
             />
           </div>
