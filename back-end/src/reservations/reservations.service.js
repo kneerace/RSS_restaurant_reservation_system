@@ -14,9 +14,11 @@ function read(name){
 }
 
 
-function insert(){
+function insert(newReservation){
     return knex("reservations")
-        .insert
+        .insert(newReservation)
+        .returning("*")
+        .then(returnedValue => returnedValue[0]);
 
 }
 
