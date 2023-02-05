@@ -5,7 +5,7 @@ function asyncErrorBoundary(delegate, defaultStatus){
         .catch((error={})=>{
             const{status=defaultStatus, message=error} = error;
             next({
-                statis, 
+                status, 
                 message, 
             });
         });
