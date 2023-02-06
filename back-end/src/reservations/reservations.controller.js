@@ -30,7 +30,7 @@ function reqBodyHas(propertyName){
   return function(req, res, next){
       const {data ={} } = req.body;
       if(data[propertyName]){
-          console.log("reqBodyHas:::propertyName::::", propertyName);
+          // console.log("reqBodyHas:::propertyName::::", propertyName);
           return next();
       }
       next({ status: 400, 
