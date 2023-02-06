@@ -54,9 +54,10 @@ function isDateValid(req, res, next){
 
 // 2.check if date is tuesday, Restaurant closed
 async function dateIsRestaurantClosedDate ( req, res, next){
+  // console.log("\ndateIsRestaurantClosedDate====")
   let res_date = new Date(res.locals.reservation_date);
-  console.log("res_date: ", res_date);
-  console.log("getDay: ", res_date.getUTCDay());
+  // console.log("res_date: ", res_date);
+  // console.log("getDay: ", res_date.getUTCDay());
 
     if(res_date.getUTCDay() == 2){
       return next({
@@ -64,6 +65,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
         message: `Restaurant is Closed on Tuesday.`,
         });
       }
+      // console.log("\t\t dateIsRestaurantClosedDate")
     next();
 };
   // 3. date in future
@@ -72,7 +74,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
     let inputDateTime = `${reservation_date}${reservation_time}`
     const todayDateTime = new Date();
     inputDateTime = new Date(inputDateTime);
-    console.log('today ', todayDateTime, '\n inputDateTime ', inputDateTime);
+    // console.log('today ', todayDateTime, '\n inputDateTime ', inputDateTime);
     if(inputDateTime < todayDateTime){
       return next({status: 400
         , message: `Reservation DateTime should be in future`,
@@ -80,6 +82,35 @@ async function dateIsRestaurantClosedDate ( req, res, next){
     }
     next();
   }
+
+  // TIME CHECK 
+  // 1. is time valid 
+  async function isTimeFormatValid(req, res, next){
+    res.locals.reservation_time = req.body.data.reservation_time;
+    // console.log('isTimeFormatValid:: ', res.locals.reservation_time, typeof(res.locals.reservation_time));
+    const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]:[0-5][0-9]$/;
+    if(timeFormat.test(res.locals.reservation_time)){
+      return next();
+    }
+    return next({
+      status:400,
+      message:`Time Format is InValid`,
+    });
+  }
+  // 2. time within restaurant hour 10:30 am to 9:30 PM 
+  async function timeWithInRestaurantHours(req, res, next){
+        const reservationTime = res.locals.reservation_time;
+        const restaurantReservationHours = {start: "10:29:59", end: "21:30:00"};
+
+        if(reservationTime > restaurantReservationHours.start && reservationTime < restaurantReservationHours.end){
+          return next();
+        }
+        
+        return next({
+          status: 400, 
+          message:`Reservation Time between 10:30AM to 9:30PM.`,
+        })
+    }
 
 async function create(reservation){
   console.log( 'this is it ') ;
@@ -96,10 +127,10 @@ module.exports = {
     reqBodyHas("reservation_time"), 
     reqBodyHas("people"),
     isDateValid,
+    isTimeFormatValid,
     dateInFuture,
     dateIsRestaurantClosedDate,
-    // timeWithInRestaurantHours(),
+    timeWithInRestaurantHours,
     asyncErrorBoundary(create),
-    
   ]
 };
