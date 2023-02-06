@@ -14,7 +14,7 @@ function read(name){
 }
 
 
-function insert(newReservation){
+function create(newReservation){
     return knex("reservations")
         .insert(newReservation)
         .returning("*")
@@ -24,5 +24,5 @@ function insert(newReservation){
 
 module.exports = {list, 
     read,
-    insert,
+    create,
     };
