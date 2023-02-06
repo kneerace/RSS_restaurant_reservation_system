@@ -25,12 +25,12 @@ async function requestHasData(req, res, next){
   }
   next();
 }
-// check if request has property as 
+// check if request has property and value
 function reqBodyHas(propertyName){
   return function(req, res, next){
       const {data ={} } = req.body;
       if(data[propertyName]){
-          // console.log("reqBodyHas:::propertyName::::", propertyName);
+          console.log("reqBodyHas:::propertyName::::", propertyName);
           return next();
       }
       next({ status: 400, 
@@ -105,16 +105,18 @@ async function dateIsRestaurantClosedDate ( req, res, next){
         if(reservationTime > restaurantReservationHours.start && reservationTime < restaurantReservationHours.end){
           return next();
         }
-        
         return next({
           status: 400, 
           message:`Reservation Time between 10:30AM to 9:30PM.`,
         })
     }
 
-async function create(reservation){
-  console.log( 'this is it ') ;
-  return "this is it "
+async function create(req, res, next){
+  const reservationDetails = req.body.data;
+  reservationsService.create(reservationDetails)
+      .then((data)=> res.status(201).json({data}))
+      .catch(next);
+  
 }
 module.exports = {
   list: asyncErrorBoundary(list),
