@@ -88,7 +88,8 @@ async function dateIsRestaurantClosedDate ( req, res, next){
   async function isTimeFormatValid(req, res, next){
     res.locals.reservation_time = req.body.data.reservation_time;
     // console.log('isTimeFormatValid:: ', res.locals.reservation_time, typeof(res.locals.reservation_time));
-    const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]:[0-5][0-9]$/;
+    // const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]:[0-5][0-9]$/;
+    const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]$/;
     if(timeFormat.test(res.locals.reservation_time)){
       return next();
     }
@@ -115,9 +116,9 @@ async function create(req, res, next){
   const reservationDetails = req.body.data;
   reservationsService.create(reservationDetails)
       .then((data)=> res.status(201).json({data}))
-      .catch(next);
-  
+      .catch(next); 
 }
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create :[
