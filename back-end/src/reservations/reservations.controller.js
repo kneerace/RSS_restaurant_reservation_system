@@ -4,31 +4,28 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
  * List handler for reservation resources
  */
 async function list(req, res, next) {
-  console.log(req);
-  // const date = req.query.date;
+  // console.log(req.query);
+  const date = req.query.date;
   const {mobile_number} = req.query;
   
-  
-
-
-  let data = null;
-  try{
-    if(date){
-      // console.log("list query: inside if::: ", req.query, '  date::', date );
-      data = await reservationsService.listByDate(date);
-      // console.log("inside list: data:: ", data)
+    let data = null;
+    try{
+      if(date){
+        // console.log("list query: inside if::: ", req.query, '  date::', date );
+        data = await reservationsService.listByDate(date);
+        // console.log("inside list: data:: ", data)
+      }
+      else if (mobile_number){
+        data = await reservationsService.listByMobileNumber(mobile_number);
+      }
+      else{
+        data = await  reservationsService.list();
+      }
+      res.json({data});
     }
-    else if (mobile_number){
-      data = await reservationsService.listByMobileNumber(mobile_number);
+    catch (error){
+      console.log(error);
     }
-    else{
-      data = await  reservationsService.list();
-    }
-    res.json({data});
-  }
-  catch (error){
-    console.log(error);
-  }
   }
 
 // check reqest has data property and if exists at least 6 of them
