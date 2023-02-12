@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, {useState} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
@@ -16,6 +15,10 @@ import TableForm from "../tables/TableForm";
  * @returns {JSX.Element}
  */
 function Routes() {
+
+  const [date, setDate ] = useState(today());
+  const dateChange = (newDate) => setDate(newDate);
+
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -25,7 +28,7 @@ function Routes() {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={today()} />
+        <Dashboard date={date} dateChange={dateChange} />
       </Route>
 
       <Route path="/search">
