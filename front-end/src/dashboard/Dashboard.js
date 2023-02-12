@@ -51,7 +51,7 @@ function Dashboard({ date, dateChange }) {
   return (
     <main>
       
-      <div className="row">
+      <div className="row row-no-gutters">
         <div className="col-12 text-center">
           <h1 className="d-inline-block">Dashboard</h1>
           <h4 className="mb-0">Reservations for {date}</h4>
@@ -70,12 +70,13 @@ function Dashboard({ date, dateChange }) {
       </div>
 
       <div className="d-flex justify-content-center mt-3">
+        {/* <div className = "row row-no-gutters justify-content-center" > */}
         <div className="col-md-2 col-sm-3 col-xs-12 col">
           <button
             name="previous"
             className="btn btn-secondary btn-sm btn-block"
             onClick={handleDateUpdate}
-            >
+            >{String.fromCharCode(8592)}
             Previous
           </button>
         </div>
@@ -93,10 +94,10 @@ function Dashboard({ date, dateChange }) {
         <div className="col-md-2 col-sm-3 col-xs-12 col">
           <button
             name="next"
-            className="btn btn-secondary btn-sm btn-block"
+            className="btn btn-secondary btn-sm btn-block "
             onClick={handleDateUpdate}
-            >
-            Next
+            > 
+            Next{String.fromCharCode(8594)}
           </button>
         </div>
       </div>
