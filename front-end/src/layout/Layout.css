@@ -1,4 +1,50 @@
+
+:root {
+  --brand-color: rgba(255, 217, 47, 1);
+
+  --primary-color: rgba(224, 34, 0, 1);
+  --primary-color-hover: rgb(255, 82, 51);
+
+  --secondary-color: rgba(216, 130, 0, 1);
+  --secondary-color-hover: rgb(255, 177, 59);
+
+  --info-color: rgba(43, 15, 6, 1);
+  --info-color-hover: rgb(134, 46, 19);
+}
+
+/* .btn.btn-primary{ */
+  /* background: var(--primary-color); */
+/* } */
+
 .side-bar {
   background-color: #393a44;
   min-width: 200px;
+}
+
+
+.reservation-count {
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: Orange;
+  margin: auto;
+}
+
+.reservation-card{
+  background-color: rgb(235, 243, 243);
+  min-width: 300px;
+  max-width: 400px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease-out;
+}
+
+.card-header{
+  background-color: gray;
+  color:white;
+  text-align:center;
+  padding: 5px;
+}
+.card-button{
+  width:100%;
+  padding:2px;
 }
