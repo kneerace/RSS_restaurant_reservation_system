@@ -4,16 +4,13 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
  * List handler for reservation resources
  */
 async function list(req, res, next) {
-  // console.log(req.query);
   const date = req.query.date;
   const {mobile_number} = req.query;
   
     let data = null;
     try{
       if(date){
-        // console.log("list query: inside if::: ", req.query, '  date::', date );
         data = await reservationsService.listByDate(date);
-        // console.log("inside list: data:: ", data)
       }
       else if (mobile_number){
         data = await reservationsService.listByMobileNumber(mobile_number);
@@ -49,7 +46,6 @@ function reqBodyHas(propertyName){
   return function(req, res, next){
       const {data ={} } = req.body;
       if(data[propertyName]){
-          // console.log("reqBodyHas:::propertyName::::", propertyName);
           return next();
       }
       next({ status: 400, 
@@ -73,10 +69,7 @@ function isDateValid(req, res, next){
 
 // 2.check if date is tuesday, Restaurant closed
 async function dateIsRestaurantClosedDate ( req, res, next){
-  // console.log("\ndateIsRestaurantClosedDate====")
   let res_date = new Date(res.locals.reservation_date);
-  // console.log("res_date: ", res_date);
-  // console.log("getDay: ", res_date.getUTCDay());
 
     if(res_date.getUTCDay() == 2){
       return next({
@@ -84,7 +77,6 @@ async function dateIsRestaurantClosedDate ( req, res, next){
         message: `Restaurant is Closed on Tuesday.`,
         });
       }
-      // console.log("\t\t dateIsRestaurantClosedDate")
     next();
 };
   // 3. date in future
@@ -93,7 +85,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
     let inputDateTime = `${reservation_date}${reservation_time}`
     const todayDateTime = new Date();
     inputDateTime = new Date(inputDateTime);
-    // console.log('today ', todayDateTime, '\n inputDateTime ', inputDateTime);
+    
     if(inputDateTime < todayDateTime){
       return next({status: 400
         , message: `Reservation DateTime should be in future`,
@@ -106,7 +98,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
   // 1. is time valid 
   async function isTimeFormatValid(req, res, next){
     res.locals.reservation_time = req.body.data.reservation_time;
-    // console.log('isTimeFormatValid:: ', res.locals.reservation_time, typeof(res.locals.reservation_time));
+    
     // const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]:[0-5][0-9]$/;
     const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]$/;
     if(timeFormat.test(res.locals.reservation_time)){
@@ -131,6 +123,44 @@ async function dateIsRestaurantClosedDate ( req, res, next){
         })
     }
 
+  async function reservationExists(req, res, next){
+
+      const {reservation_id} = req.params;
+      const reservation = await reservationsService.read(reservation_id);
+      if(reservation){
+        res.locals.reservation = reservation;
+        return next();
+      }
+      next({
+        status: 404, 
+        message: `Reservation with ID ${reservation_id} does not exist`,
+      });
+  };
+
+  async function validStatus (req, res, next){
+    const {status } = req.body.data;
+
+    const validStatus = ['booked','seated','finished','cancelled'];
+
+    if(!validStatus.includes(status)){
+      next({
+        status: 404,
+        messsage:`The status valid valudes are ${validStatus.join(", ")}.`,
+      })
+    }
+    next();
+  };
+
+async function updateStatus(req, res, next){
+  const {reservation_id} = res.params;
+  const {status} = req.body.data;
+
+  reservationsService.updateStatus(reservation_id, status)
+    .then((data)=> res.status(200).json({data}))
+    .catch(next);
+
+  
+}
 async function create(req, res, next){
   const reservationDetails = req.body.data;
   reservationsService.create(reservationDetails)
@@ -154,5 +184,10 @@ module.exports = {
     dateIsRestaurantClosedDate,
     timeWithInRestaurantHours,
     asyncErrorBoundary(create),
+  ], 
+  updateStatus:[
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(validStatus),
+    asyncErrorBoundary(updateStatus),
   ]
 };
