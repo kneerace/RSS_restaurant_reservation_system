@@ -22,14 +22,19 @@ function listByMobileNumber(mobile_number){
         .whereNot({status: "cancelled"})
         .orderBy("reservation_date", "reservation_time");
 }
-function read(name){
+function read(reservation_id){
     return knex("reservations")
         .select("*")
-        .where({name})
+        .where({reservation_id})
         .first();
 
 }
 
+function updateStatus(reservation_id,status){
+    return knex("reservations")
+        .where({reservation_id})
+        .update({status});
+}
 
 function create(newReservation){
     return knex("reservations")
@@ -44,4 +49,5 @@ module.exports = {list,
     listByMobileNumber,
     read,
     create,
+    updateStatus,
     };
