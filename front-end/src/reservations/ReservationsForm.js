@@ -18,7 +18,6 @@ function ReservationForm(){
   const [reservation, setReservation] = useState(initialReservation);
   //show initial form data
   useEffect(()=>{
-    const abortController = new AbortController();
     function newReservation(){
       if(pathname.includes("new")){
           setReservation(initialReservation);
@@ -38,7 +37,6 @@ function ReservationForm(){
       else {
         setReservation({...reservation, [target.name]: target.value});
       }
-      console.log('handleChange ', reservation);
     };
 
     // effect based on SUBMIT button click
@@ -46,7 +44,7 @@ function ReservationForm(){
       event.preventDefault();
       try{
         const abortController = new AbortController();
-        const response = await createReservation(reservation, abortController.abort());
+        await createReservation(reservation, abortController.abort());
         history.push("/"); // for now pusing to dashboard
       } catch(error){
         console.log("handleSubmit error ", error)

@@ -63,6 +63,7 @@ export async function listReservations(params, signal) {
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value.toString())
   );
+  
   return await fetchJson(url, { headers, signal }, [])
     .then(formatReservationDate)
     .then(formatReservationTime);
@@ -83,3 +84,20 @@ export async function createReservation(newReservation, signal){
    };
    return await fetchJson(url, options, {});
  }
+
+ /**
+ * Create new reservation.
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to a possibly empty array of reservation saved in the database.
+ */
+
+export async function updateStatus(reservation_id, status, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`);
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({data : {status}}),
+    signal,
+  };
+  return await fetchJson(url, options, {});
+}

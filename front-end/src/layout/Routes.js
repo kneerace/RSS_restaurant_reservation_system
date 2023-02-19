@@ -14,7 +14,7 @@ import TableForm from "../tables/TableForm";
  *
  * @returns {JSX.Element}
  */
-function Routes() {
+function Routes({errorHandler}) {
 
   const [date, setDate ] = useState(today());
   const dateChange = (newDate) => setDate(newDate);
@@ -28,7 +28,7 @@ function Routes() {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={date} dateChange={dateChange} />
+        <Dashboard date={date} dateChange={dateChange} errorHandler={errorHandler} />
       </Route>
 
       <Route path="/search">
