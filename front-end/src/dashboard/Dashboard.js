@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { previous, today, next } from "../utils/date-time";
+import RenderReservations from "../reservations/RenderReservations";
 
 /**
  * Defines the dashboard page.
@@ -9,27 +10,23 @@ import { previous, today, next } from "../utils/date-time";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, dateChange }) {
-
+function Dashboard({ date, dateChange, errorHandler }) {
  
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   
   useEffect(loadDashboard, [date]);
 
-    function loadDashboard() {
+  async function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
-    listReservations({ date }, abortController.signal)
+    const response = await listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
     return () => abortController.abort();
   }
 
-  // console.log("AFTER loadDashboard():: ", reservations);
-
   const handleDateUpdate = ({ target }) => {
-    // console.log("handleDateUpdate in Dashboard.js:: ", target.name , " date::: ", date);
     switch (target.name) {
       case "previous":
         dateChange(previous(date));
@@ -41,12 +38,10 @@ function Dashboard({ date, dateChange }) {
         dateChange(next(date));
         break;
       default:
-        dateChange(today())
+        dateChange(today());
         break;
     }
-    // console.log("handleDateUpdate in Dashboard.js after switch:: ", target.name , " date::: ", date)
   };
-
 
   return (
     <main>
@@ -59,7 +54,10 @@ function Dashboard({ date, dateChange }) {
             {reservations.length >= 1 ? (
               <span className="mx-3">
                 <span className="reservation-count">{reservations.length}</span>
-                &nbsp;reservations
+                &nbsp;
+                {reservations.length >1 ? <span>reservations</span>:
+                <span>reservation</span> }
+                
               </span>
             ) : (
               // <div className="mx-3 text-center mt-4">No reservations</div>
@@ -76,7 +74,7 @@ function Dashboard({ date, dateChange }) {
             name="previous"
             className="btn btn-secondary btn-sm btn-block"
             onClick={handleDateUpdate}
-            >{String.fromCharCode(8592)}
+            >{String.fromCharCode(8592)}&nbsp;
             Previous
           </button>
         </div>
@@ -97,13 +95,15 @@ function Dashboard({ date, dateChange }) {
             className="btn btn-secondary btn-sm btn-block "
             onClick={handleDateUpdate}
             > 
-            Next{String.fromCharCode(8594)}
+            Next&nbsp;{String.fromCharCode(8594)}
           </button>
         </div>
       </div>
 
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      <RenderReservations reservations={reservations} errorHandler = {errorHandler} />
+      {/* {JSON.stringify(reservations)} */}
+      {/* {reservations} */}
 
 
     </main>
