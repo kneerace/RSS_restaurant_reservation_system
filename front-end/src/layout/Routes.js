@@ -35,7 +35,7 @@ function Routes({errorHandler}) {
         <h1> Search page</h1>
       </Route>
       <Route path="/reservations/new">
-        <ReservationForm />
+        <ReservationForm errorHandler={errorHandler}/>
       </Route>
       <Route path="/tables/new">
         <TableForm />
