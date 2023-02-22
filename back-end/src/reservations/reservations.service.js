@@ -33,7 +33,7 @@ function read(reservation_id){
 function updateStatus(reservation_id,status){
     return knex("reservations")
         .where({reservation_id})
-        .update({status});
+        .update({status}, "*");
 }
 
 function create(newReservation){
