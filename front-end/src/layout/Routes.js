@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import ReservationForm from "../reservations/ReservationsForm";
 import TableForm from "../tables/TableForm";
+import useQuery from "../utils/useQuery";
 
 
 /**
@@ -17,7 +18,13 @@ import TableForm from "../tables/TableForm";
 function Routes({errorHandler}) {
 
   const [date, setDate ] = useState(today());
-  const dateChange = (newDate) => setDate(newDate);
+  // const dateChange = (newDate) => setDate(newDate);
+
+  const query = useQuery().get("date");
+
+  useEffect(()=>{
+    query && setDate((currentDate)=> query);
+  }, [query] );
 
   return (
     <Switch>
@@ -28,7 +35,7 @@ function Routes({errorHandler}) {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={date} dateChange={dateChange} errorHandler={errorHandler} />
+        <Dashboard date={date} errorHandler={errorHandler} />
       </Route>
 
       <Route path="/search">
@@ -38,7 +45,7 @@ function Routes({errorHandler}) {
         <ReservationForm errorHandler={errorHandler}/>
       </Route>
       <Route path="/tables/new">
-        <TableForm />
+        <TableForm errorHandler={errorHandler} />
       </Route>
 
       <Route>
