@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { previous, today, next } from "../utils/date-time";
@@ -11,34 +12,47 @@ import RenderReservations from "../reservations/RenderReservations";
  * @returns {JSX.Element}
  */
 function Dashboard({ date, dateChange, errorHandler }) {
+  
+  const history = useHistory();
  
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   
-  useEffect(loadDashboard, [date]);
+      // //Fetching reservation
+    useEffect(()=>{
+        async function loadDashboard() {
+          const abortController = new AbortController();
+            try{
+                setReservationsError(null);
+                const response = await listReservations({ date }, abortController.signal);            
+                 setReservations(response);
+            }
+            catch(error){
+                console.log('Error: ', error); //-------TODO 
+                setReservationsError(error);
+            }
+                }
+                loadDashboard();
+    }, [date]);
 
-  async function loadDashboard() {
-    const abortController = new AbortController();
-    setReservationsError(null);
-    const response = await listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setReservationsError);
-    return () => abortController.abort();
-  }
+
 
   const handleDateUpdate = ({ target }) => {
     switch (target.name) {
       case "previous":
-        dateChange(previous(date));
+        // dateChange(previous(date));
+        history.push(`/dashboard?date=${previous(date)}`);
         break;
       case "today":
-        dateChange(today());
+        // dateChange(today());
+        history.push(`/dashboard?date=${today()}`);
         break;
       case "next":
-        dateChange(next(date));
+        // dateChange(next(date));
+        history.push(`/dashboard?date=${next(date)}`);
         break;
       default:
-        dateChange(today());
+        history.push(`/dashboard?date=${today()}`);
         break;
     }
   };
