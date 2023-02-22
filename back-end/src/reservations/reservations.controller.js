@@ -85,7 +85,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
     let inputDateTime = `${reservation_date}${reservation_time}`
     const todayDateTime = new Date();
     inputDateTime = new Date(inputDateTime);
-    
+
     if(inputDateTime < todayDateTime){
       return next({status: 400
         , message: `Reservation DateTime should be in future`,
@@ -152,7 +152,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
   };
 
 async function updateStatus(req, res, next){
-  const {reservation_id} = res.params;
+  const {reservation_id} = req.params;
   const {status} = req.body.data;
 
   reservationsService.updateStatus(reservation_id, status)
