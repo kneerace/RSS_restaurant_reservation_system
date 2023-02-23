@@ -82,10 +82,10 @@ async function dateIsRestaurantClosedDate ( req, res, next){
   // 3. date in future
   function dateInFuture(req, res, next){
     const {reservation_date, reservation_time}= req.body.data;
-    let inputDateTime = `${reservation_date}${reservation_time}`
+    let inputDateTime = `${reservation_date} ${reservation_time}`
     const todayDateTime = new Date();
     inputDateTime = new Date(inputDateTime);
-
+    
     if(inputDateTime < todayDateTime){
       return next({status: 400
         , message: `Reservation DateTime should be in future`,
@@ -122,9 +122,19 @@ async function dateIsRestaurantClosedDate ( req, res, next){
           message:`Reservation Time between 10:30AM to 9:30PM.`,
         })
     }
+// Phone validation
+async function isPhoneValid(req, res, next){
+  const {mobile_number} = req.body.data;
+  if(isNaN(+mobile_number)){
+    return next({
+      status:400, 
+      message:`Phone number is not valid, please input digit.`,
+    })
+  }
+  next();
+}
 
   async function reservationExists(req, res, next){
-
       const {reservation_id} = req.params;
       const reservation = await reservationsService.read(reservation_id);
       if(reservation){
@@ -183,6 +193,7 @@ module.exports = {
     dateInFuture,
     dateIsRestaurantClosedDate,
     timeWithInRestaurantHours,
+    isPhoneValid,
     asyncErrorBoundary(create),
   ], 
   updateStatus:[
