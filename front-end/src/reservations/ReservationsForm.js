@@ -2,7 +2,8 @@ import React, { useState, useEffect} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import { createReservation } from "../utils/api";
 
-function ReservationForm(){
+function ReservationForm({errorHandler}){
+  // errorHandler(null);
   const history = useHistory();
   const {pathname} = useLocation();
 
@@ -44,9 +45,13 @@ function ReservationForm(){
       event.preventDefault();
       try{
         const abortController = new AbortController();
-        await createReservation(reservation, abortController.abort());
-        history.push("/"); // for now pusing to dashboard
+        const response = await createReservation(reservation, abortController.abort());
+        setReservation(response);
+        
+        history.push(`/dashboard?date=${reservation.reservation_date}`);
+        errorHandler(null);  
       } catch(error){
+        error && errorHandler(error);
         console.log("handleSubmit error ", error)
       }
     }
