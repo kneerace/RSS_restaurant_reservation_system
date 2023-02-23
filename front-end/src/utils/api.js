@@ -101,3 +101,33 @@ export async function updateStatus(reservation_id, status, signal){
   };
   return await fetchJson(url, options, {});
 }
+
+// -------TABLES
+/**
+ * List all tables
+ * @returns {Promise<[table]>}
+ * a promise that resolves to a possibly empty array of tables saved in the database
+ */
+
+export async function listTables(params, signal){
+  const url = new URL(`${API_BASE_URL}/tables`);
+  Object.entries(params).forEach(([key, value])=>{
+    url.searchParams.append(key, value.toString())
+  });
+  return await fetchJson(url, {headers, signal}, []);
+}
+/**
+ * Create new table.
+ * @returns {Promise<[table]>}
+ *  a promise that resolves to a possibly empty array of reservation saved in the database.
+ */
+export async function createTable(newTable, signal){
+  const url = new URL(`${API_BASE_URL}/tables`);
+   const options = {
+     method: "POST",
+     headers,
+     body: JSON.stringify({data : newTable}),
+     signal,
+   };
+   return await fetchJson(url, options, {});
+ }
