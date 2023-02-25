@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { previous, today, next } from "../utils/date-time";
 import RenderReservations from "../reservations/RenderReservations";
+import RenderTables from "../tables/RenderTables";
 
 /**
  * Defines the dashboard page.
@@ -11,12 +12,15 @@ import RenderReservations from "../reservations/RenderReservations";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, dateChange, errorHandler }) {
+function Dashboard({ date, errorHandler }) {
   
   const history = useHistory();
  
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  
+  const [tables, setTables]= useState([]);
+  const[ tableError, setTablesError]= useState(null);
   
       // //Fetching reservation
     useEffect(()=>{
@@ -35,6 +39,22 @@ function Dashboard({ date, dateChange, errorHandler }) {
                 loadDashboard();
     }, [date]);
 
+    //fetching tables list
+    useEffect(()=>{
+      async function loadTables() {
+        const abortController = new AbortController();
+          try{
+              setTablesError(null);
+              const response = await listTables( abortController.signal);            
+               setTables(response);
+          }
+          catch(error){
+              console.log('Error: ', error); //-------TODO 
+              setTablesError(error);
+          }
+              }
+              loadTables();
+  }, [reservations]);
 
 
   const handleDateUpdate = ({ target }) => {
@@ -113,8 +133,8 @@ function Dashboard({ date, dateChange, errorHandler }) {
           </button>
         </div>
       </div>
-
-      <ErrorAlert error={reservationsError} />
+      < RenderTables tables={tables} errorHandler={errorHandler} />
+      {/* <ErrorAlert error={reservationsError} /> */}
       <RenderReservations reservations={reservations} errorHandler = {errorHandler} />
       {/* {JSON.stringify(reservations)} */}
       {/* {reservations} */}
