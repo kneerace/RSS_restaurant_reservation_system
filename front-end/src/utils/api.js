@@ -131,3 +131,15 @@ export async function createTable(newTable, signal){
    };
    return await fetchJson(url, options, {});
  }
+
+ export async function resetTable(table_id, signal){
+  const url = new URL(`${API_BASE_URL}/tables`);
+   const options = {
+     method: "PUT",
+     headers,
+     body: JSON.stringify({data : {table_id}}),
+     signal,
+   };
+   return await fetchJson(url, options, {});
+ }
+ 
