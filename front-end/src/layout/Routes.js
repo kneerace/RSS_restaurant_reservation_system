@@ -6,6 +6,7 @@ import { today } from "../utils/date-time";
 import ReservationForm from "../reservations/ReservationsForm";
 import TableForm from "../tables/TableForm";
 import useQuery from "../utils/useQuery";
+import AssignSeatToReservation from "../seat/AssignSeatToReservation";
 
 
 /**
@@ -36,6 +37,9 @@ function Routes({errorHandler}) {
       </Route>
       <Route path="/dashboard">
         <Dashboard date={date} errorHandler={errorHandler} />
+      </Route>
+      <Route path="/reservations/:reservation_id/seat" exact={true} >
+        <AssignSeatToReservation errorHandler={errorHandler} />
       </Route>
 
       <Route path="/search">
