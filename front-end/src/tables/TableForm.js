@@ -27,6 +27,15 @@ function TableForm({errorHandler}){
     // effect based on SUBMIT button click
     async function handleSubmit(event){
         event.preventDefault();
+        if(table.table_name.length <2){
+            
+            return errorHandler({message: "Table Name Must be at least 2 Char in length"})
+        }
+
+        if(table.capacity <1){
+            return errorHandler({message: "Must have some capacity, can't be less than 1"})
+        }
+
         try{
         const abortController = new AbortController();
         const response = await createTable(table, abortController.abort());
@@ -36,7 +45,7 @@ function TableForm({errorHandler}){
         errorHandler(null);  
         } catch(error){
         error && errorHandler(error);
-        console.log("handleSubmit error ", error)
+        // console.log("handleSubmit error ", error)
         }
     }
 
