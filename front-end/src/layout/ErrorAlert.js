@@ -22,10 +22,10 @@ function ErrorAlert({ error }) {
 
    function handleShowError(){
       setShowError("hide")
-    console.log("handleShowError:::: ", showError )
+    // console.log("handleShowError:::: ", showError )
   }
 
-  console.log("out of handleShowError:::: ", showError )
+  // console.log("out of handleShowError:::: ", showError )
 
   return (
     error && (

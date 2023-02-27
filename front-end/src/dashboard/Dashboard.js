@@ -32,8 +32,9 @@ function Dashboard({ date, errorHandler }) {
                  setReservations(response);
             }
             catch(error){
-                console.log('Error: ', error); //-------TODO 
+                // console.log('Error: ', error); //-------TODO 
                 setReservationsError(error);
+                ErrorAlert(reservationsError);
             }
                 }
                 loadDashboard();
@@ -49,8 +50,9 @@ function Dashboard({ date, errorHandler }) {
                setTables(response);
           }
           catch(error){
-              console.log('Error: ', error); //-------TODO 
+              // console.log('Error: ', error); //-------TODO 
               setTablesError(error);
+              ErrorAlert(tableError);
           }
               }
               loadTables();
