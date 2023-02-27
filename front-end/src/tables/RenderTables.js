@@ -5,17 +5,16 @@ import TableView from "./TableView";
 
 
 function RenderTables({tables,errorHandler}){
-    console.log("RenderTables: ", tables);
+    // console.log("RenderTables: ", tables);
     const history = useHistory();
   
     const finishTable = async (table)=> {
-        if(window.confirm(`Is the table ready to seat new Guests?\n This cannont be Undone!!`)){
+        if(window.confirm(`"Is this table ready to seat new guests? This cannot be undone."`)){
             try{
                 const abortController = new AbortController();
-                await updateStatus(table.reservation_id, "finished", abortController.signal);
                 await resetTable(table.table_id, abortController.signal);
                 errorHandler(null);
-                history.go();
+                history.go(0);
             } catch(error){
                 error && errorHandler(error);
             }
