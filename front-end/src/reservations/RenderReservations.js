@@ -4,7 +4,7 @@ import {updateStatus} from "../utils/api";
 
 
 function RenderReservations({reservations,errorHandler}){
-    console.log("RenderReservations: ", reservations);
+    // console.log("RenderReservations: ", reservations);
     const history = useHistory();
     // Mapping each deck from the response
     const reservationList = reservations.map((reservation)=>{
@@ -29,7 +29,8 @@ function RenderReservations({reservations,errorHandler}){
                             );
                         history.go(0);
                     } catch(error){
-                        console.log(error);
+                        // console.log(error);
+                        error && errorHandler(error);
                     }
                 }
         };
@@ -54,14 +55,16 @@ function RenderReservations({reservations,errorHandler}){
                         </div>
                         <div className="row">
                             <div className="col-4">Status:</div>
-                                <span>{status}</span>
+                                <span  
+                                data-reservation-id-status={reservation.reservation_id}>{status}</span>
                         </div>
                         <div className="row my-3 d-flex justify-content-center mx-3">
                             <div className="col-4 px-2">
-                                <Link to={`reservations/${reservation.id}/seat`} className=' card-button btn btn-secondary'>Seat</Link>
+                               { status == "booked" && <Link to={`/reservations/${reservation_id}/seat`}
+                                className={`card-button btn btn-secondary {"disabled": ${status}!="booked"}`} id="reservation-id">Seat</Link>}
                             </div>
                             <div className="col-4 px-2">
-                                <Link to={`reservations/${reservation.id}`} className=' card-button btn btn-primary ml-1'>Edit</Link>
+                                <Link to={`reservations/${reservation_id}`} className=' card-button btn btn-outline-primary ml-1'>Edit</Link>
                             </div>
                             <div className="col-4 px=2">
                                 <button className='card-button btn btn-danger' onClick={handleCancel}>Cancel</button>
