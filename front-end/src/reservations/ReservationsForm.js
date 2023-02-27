@@ -57,8 +57,8 @@ function ReservationForm({errorHandler}){
     }
 
     // effect based on CANCEL button click
-    function handleCancel(event){
-      event.preventDefault();
+    function handleCancel(){
+      // event.preventDefault();
       history.goBack();
     }
 
