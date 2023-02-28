@@ -98,7 +98,6 @@ async function dateIsRestaurantClosedDate ( req, res, next){
   // 1. is time valid 
   async function isTimeFormatValid(req, res, next){
     res.locals.reservation_time = req.body.data.reservation_time;
-    
     // const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]:[0-5][0-9]$/;
     const timeFormat = /^(2[0-3]|[01]?[0-9]):[0-5][0-9]$/;
     if(timeFormat.test(res.locals.reservation_time)){
@@ -178,6 +177,14 @@ async function create(req, res, next){
       .catch(next); 
 }
 
+async function update(req, res, next){
+  const reservationDetails = req.body.data;
+  // console.log('update::', reservationDetails)//----------
+  reservationsService.update(reservationDetails)
+      .then((data)=> res.status(202).json({data}))
+      .catch(next); 
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create :[
@@ -196,6 +203,22 @@ module.exports = {
     isPhoneValid,
     asyncErrorBoundary(create),
   ], 
+  update:[
+    requestHasData,
+    reqBodyHas("first_name"),
+    reqBodyHas("last_name"),
+    reqBodyHas("mobile_number"), 
+    reqBodyHas("reservation_date"), 
+    reqBodyHas("reservation_time"), 
+    reqBodyHas("people"),
+    isDateValid,
+    isTimeFormatValid,
+    dateInFuture,
+    dateIsRestaurantClosedDate,
+    timeWithInRestaurantHours,
+    isPhoneValid,
+    asyncErrorBoundary(update),
+  ],
   updateStatus:[
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(validStatus),
