@@ -7,6 +7,7 @@ import ReservationForm from "../reservations/ReservationsForm";
 import TableForm from "../tables/TableForm";
 import useQuery from "../utils/useQuery";
 import AssignSeatToReservation from "../seat/AssignSeatToReservation";
+import SearchForm from "../search/SearchForm";
 
 
 /**
@@ -41,9 +42,8 @@ function Routes({errorHandler}) {
       <Route path="/reservations/:reservation_id/seat" exact={true} >
         <AssignSeatToReservation errorHandler={errorHandler} />
       </Route>
-
-      <Route path="/search">
-        <h1> Search page</h1>
+      <Route path="/search" exact={true}>
+        <SearchForm />
       </Route>
       <Route path="/reservations/new">
         <ReservationForm errorHandler={errorHandler}/>
