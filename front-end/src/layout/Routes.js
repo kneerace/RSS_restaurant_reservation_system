@@ -42,6 +42,9 @@ function Routes({errorHandler}) {
       <Route path="/reservations/:reservation_id/seat" exact={true} >
         <AssignSeatToReservation errorHandler={errorHandler} />
       </Route>
+      <Route path="/reservations/:reservation_id/edit" exact={true} >
+        <ReservationForm errorHandler={errorHandler} />
+      </Route>
       <Route path="/search" exact={true}>
         <SearchForm />
       </Route>

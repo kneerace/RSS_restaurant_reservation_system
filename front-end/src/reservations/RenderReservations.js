@@ -20,7 +20,7 @@ function RenderReservations({reservations,errorHandler}){
     
     const handleCancel = async (event)=>{
         event.preventDefault();
-            if(window.confirm(`Are you sure to cancel this Reservation? \nOnce cancelled it can't be recovered.\nWe need to fill details for new Reservation again`))
+            if(window.confirm(`Do you want to cancel this reservation? This cannot be undone.`))
                 {
                 try{
                     const abortController = new AbortController();
@@ -61,13 +61,18 @@ function RenderReservations({reservations,errorHandler}){
                         <div className="row my-3 d-flex justify-content-center mx-3">
                             <div className="col-4 px-2">
                                { status == "booked" && <Link to={`/reservations/${reservation_id}/seat`}
-                                className={`card-button btn btn-secondary {"disabled": ${status}!="booked"}`} id="reservation-id">Seat</Link>}
+                                className={`card-button btn btn-secondary`} id="reservation-id">Seat</Link>}
                             </div>
                             <div className="col-4 px-2">
-                                <Link to={`reservations/${reservation_id}`} className=' card-button btn btn-outline-primary ml-1'>Edit</Link>
+                                {status == "booked" && <Link to={{
+                                    pathname:`reservations/${reservation_id}/edit`
+                                , state:{reservation}, }} 
+                                className=' card-button btn btn-outline-primary ml-1'>Edit</Link>}
                             </div>
                             <div className="col-4 px=2">
-                                <button className='card-button btn btn-danger' onClick={handleCancel}>Cancel</button>
+                                <button className='card-button btn btn-danger'
+                                 data-reservation-id-cancel={reservation.reservation_id}
+                                 onClick={handleCancel}>Cancel</button>
                             </div>
                         </div>
                     </div>
