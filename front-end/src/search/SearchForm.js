@@ -11,8 +11,7 @@ function SearchForm(){
 
     async function handleChange({target}){
         setMobileNumber(target.value);
-
-        console.log('SearchForm handleChange:::', mobileNumber)
+        // console.log('SearchForm handleChange:::', mobileNumber)
     }
 
     async function handleSearch(event){
@@ -25,7 +24,7 @@ function SearchForm(){
         listReservations({mobile_number: mobileNumber}, abortController.signal)
         .then(response=> {
             response.length>0 ? setReservations(response) : setNoReservation(true);
-            console.log('response length:::', response.length, '  noReservation:::', noReservation);
+            // console.log('response length:::', response.length, '  noReservation:::', noReservation);
         })
         .catch(reservationsError);
     }
@@ -33,15 +32,18 @@ function SearchForm(){
     return(
         <div>
             <div className="row">
-                <div className="col text-center">
+                <div className="col-12 text-center">
                     <h1>Search</h1>
                 </div>
             </div>
             <div className="row ">
                 <div className="col text-center">Search by Mobile Number
                 </div>
+            </div>
+            <div className="row">
+                <div className="col text-center">
                 <div className="row d-flex justify-content-center">
-                    <form onSubmit={handleSearch} className="form-inline">
+                    <form onSubmit={handleSearch} className="form-inline mt-2">
                         <input
                             type="tel"
                             name="mobile_number"
@@ -51,7 +53,8 @@ function SearchForm(){
                             value ={mobileNumber}
                             onChange={handleChange} required
                         /> 
-                    <button type="submit" className="btn btn-outline-primary form-control">
+                    <button type="submit" className="btn-md btn-primary form-control mx-2"
+                     >
                         Find   </button>
                     </form>
                     
@@ -60,7 +63,7 @@ function SearchForm(){
                         {noReservation && (<div>No reservations found</div>)}
                     </div>
                 </div>
-
+                </div>
             </div>   
             
         </div>
