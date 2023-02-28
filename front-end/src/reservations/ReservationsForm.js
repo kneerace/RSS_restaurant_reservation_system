@@ -1,11 +1,11 @@
 import React, { useState, useEffect} from "react";
-import {useHistory, useLocation} from "react-router-dom";
-import { createReservation } from "../utils/api";
+import {useHistory, useLocation, useParams} from "react-router-dom";
+import { createReservation,updateReservation } from "../utils/api";
 
 function ReservationForm({errorHandler}){
   // errorHandler(null);
   const history = useHistory();
-  const {pathname} = useLocation();
+  const {pathname, state} = useLocation();
 
   const today = new Date().toISOString().split("T")[0];
   const initialReservation = {
@@ -13,19 +13,22 @@ function ReservationForm({errorHandler}){
     last_name: "",
     mobile_number: "",
     people: 1,
-    reservation_date: today,
-    reservation_time: "10:30",
+    reservation_date: "",
+    reservation_time: "",
   }
   const [reservation, setReservation] = useState(initialReservation);
+  const[editFlag, setEditFlag] = useState(false);
+
   //show initial form data
   useEffect(()=>{
     function newReservation(){
       if(pathname.includes("new")){
           setReservation(initialReservation);
       }
-      // else{
-          // setEditFlag(false);
-      // }
+      else if (pathname.includes("edit")){
+          setReservation(state.reservation);
+          setEditFlag(true);
+      }
     }
     newReservation();
     },[pathname]);
@@ -45,14 +48,20 @@ function ReservationForm({errorHandler}){
       event.preventDefault();
       try{
         const abortController = new AbortController();
+        if(editFlag){
+          await updateReservation(reservation, abortController.abort());
+          history.goBack();
+        }
+        else{        
         const response = await createReservation(reservation, abortController.abort());
         setReservation(response);
-        
         history.push(`/dashboard?date=${reservation.reservation_date}`);
+        }
+
         errorHandler(null);  
       } catch(error){
         error && errorHandler(error);
-        console.log("handleSubmit error ", error)
+        // console.log("handleSubmit error ", error)
       }
     }
 
@@ -64,8 +73,11 @@ function ReservationForm({errorHandler}){
 
     return (
         <div>
-    <h1>New Reservation</h1>
-
+          <div className="row">
+                <div className="col-12 text-center">
+                  {editFlag ? <h1>Edit Reservation</h1> : <h1>New Reservation</h1>}
+                </div>
+          </div>
     <form onSubmit={handleSubmit}>
         <div className="row d-flex justify-content-center">
             <div className="col-md-4 col-lg-4 mb-3">
@@ -77,7 +89,9 @@ function ReservationForm({errorHandler}){
                     id="first_name"
                     placeholder="First Name"
                     classname="form-control" 
-                    onChange={handleChange} required
+                    onChange={handleChange} 
+                    value={reservation.first_name}
+                    required
                 />
             </div>
 
@@ -90,7 +104,8 @@ function ReservationForm({errorHandler}){
                     id="last_name"
                     placeholder="Last Name"
                     classname="form-control" 
-                    onChange={handleChange} required
+                    onChange={handleChange} 
+                    value={reservation.last_name}required
                 />
             </div>
         </div>
@@ -106,7 +121,8 @@ function ReservationForm({errorHandler}){
               id="mobile_number"
               placeholder="(571)-456-7890"
               className="form-control" 
-              onChange={handleChange} required
+              onChange={handleChange} 
+              value={reservation.mobile_number} required
             />
           </div>
           <div className="col-md-4 col-lg-4 mb-3">
@@ -121,7 +137,7 @@ function ReservationForm({errorHandler}){
               id="people"
               placeholder="1"
               className="form-control" 
-              onChange={handleChange} required
+              onChange={handleChange} value={reservation.people}  required
             />
           </div>
         </div>
@@ -137,7 +153,8 @@ function ReservationForm({errorHandler}){
               id="reservation_date"
               placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}"
               className="form-control" 
-              onChange={handleChange} required
+              onChange={handleChange} 
+              value={reservation.reservation_date} required
             />
           </div>
           <div className="col-md-4 col-lg-4 mb-3">
@@ -150,7 +167,8 @@ function ReservationForm({errorHandler}){
               id="reservation_time"
               placeholder="HH:MM" pattern="[0-9]{2}:[0-9]{2}"
               className="form-control" 
-              onChange={handleChange} required
+              onChange={handleChange} 
+              value={reservation.reservation_time} required
             />
           </div>
         </div>
