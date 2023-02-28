@@ -3,7 +3,7 @@
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
 import formatReservationDate from "./format-reservation-date";
-import formatReservationTime from "./format-reservation-date";
+import formatReservationTime from "./format-reservation-time";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
@@ -91,6 +91,18 @@ export async function createReservation(newReservation, signal){
  *  a promise that resolves to a possibly empty array of reservation saved in the database.
  */
 
+ export async function updateReservation(updatedReservation, signal){
+  const url = new URL(`${API_BASE_URL}/reservations`);
+   const options = {
+     method: "PUT",
+     headers,
+     body: JSON.stringify({data : updatedReservation}),
+     signal,
+   };
+   return await fetchJson(url, options, {});
+ }
+
+
 export async function updateStatus(reservation_id, status, signal){
   const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`);
   const options = {
@@ -146,7 +158,6 @@ export async function createTable(newTable, signal){
 
  export async function updateTableReservation(table_id, reservation_id, signal){
   const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
-  console.log('updateTableReservation::: ' , url)
    const options = {
      method: "PUT",
      headers,
