@@ -17,11 +17,17 @@ function listByDate(reservation_date){
 function listByMobileNumber(mobile_number){
     return knex("reservations")
         .select("*")
-        .where({mobile_number})
-        .whereNot({status:"finished"})
-        .whereNot({status: "cancelled"})
-        .orderBy("reservation_date", "reservation_time");
+        .whereRaw(
+            "translate(mobile_number, '() -', '') like ?",
+            `%${mobile_number.replace(/\D/g, "")}%`
+          )
+          .orderBy("reservation_date");
+        // .where({mobile_number})
+        // // .whereNot({status:"finished"})
+        // // .whereNot({status: "cancelled"})
+        // .orderBy("reservation_date", "reservation_time");
 }
+
 function read(reservation_id){
     return knex("reservations")
         .select("*")
