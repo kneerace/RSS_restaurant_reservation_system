@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { listReservations, listTables } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
+// import ErrorAlert from "../layout/ErrorAlert";
 import { previous, today, next } from "../utils/date-time";
 import RenderReservations from "../reservations/RenderReservations";
 import RenderTables from "../tables/RenderTables";
@@ -17,23 +17,22 @@ function Dashboard({ date, errorHandler }) {
   const history = useHistory();
  
   const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
+  // const [reservationsError, setReservationsError] = useState(null);
   
   const [tables, setTables]= useState([]);
-  const[ tableError, setTablesError]= useState(null);
+  // const[ tableError, setTablesError]= useState(null);
   
       // //Fetching reservation
     useEffect(()=>{
         async function loadDashboard() {
           const abortController = new AbortController();
             try{
-                setReservationsError(null);
+                // setReservationsError(null);
                 const response = await listReservations({ date }, abortController.signal);            
                  setReservations(response);
             }
             catch(error){
-                // console.log('Error: ', error); //-------TODO 
-                setReservationsError(error);
+                // setReservationsError(error);
                 // ErrorAlert(reservationsError);
             }
                 }
@@ -45,15 +44,14 @@ function Dashboard({ date, errorHandler }) {
       async function loadTables() {
         const abortController = new AbortController();
           try{
-              setTablesError(null);
+              // setTablesError(null);
               const response = await listTables( abortController.signal);            
                setTables(response);
           }
           catch(error){
-              // console.log('Error: ', error); //-------TODO 
-              setTablesError(error);
-              // ErrorAlert(tableError);
+              // setTablesError(error);
           }
+          // ErrorAlert(tableError);
               }
               loadTables();
   }, [reservations]);
