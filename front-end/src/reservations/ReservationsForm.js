@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import {useHistory, useLocation, useParams} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import { createReservation,updateReservation } from "../utils/api";
 
 function ReservationForm({errorHandler}){
@@ -7,7 +7,7 @@ function ReservationForm({errorHandler}){
   const history = useHistory();
   const {pathname, state} = useLocation();
 
-  const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
   const initialReservation = {
     first_name: "",
     last_name: "",
@@ -31,7 +31,8 @@ function ReservationForm({errorHandler}){
       }
     }
     newReservation();
-    },[pathname]);
+    // },[pathname]);
+    },[]);
     
     // record of change on filling form values
     function handleChange({target}){
