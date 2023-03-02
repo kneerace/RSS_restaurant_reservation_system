@@ -60,11 +60,11 @@ function RenderReservations({reservations,errorHandler}){
                         </div>
                         <div className="row my-3 d-flex justify-content-center mx-3">
                             <div className="col-4 px-2">
-                               { status == "booked" && <Link to={`/reservations/${reservation_id}/seat`}
+                               { status === "booked" && <Link to={`/reservations/${reservation_id}/seat`}
                                 className={`card-button btn btn-secondary`} id="reservation-id">Seat</Link>}
                             </div>
                             <div className="col-4 px-2">
-                                {status == "booked" && <Link to={{
+                                {status === "booked" && <Link to={{
                                     pathname:`reservations/${reservation_id}/edit`
                                 , state:{reservation}, }} 
                                 className=' card-button btn btn-outline-primary ml-1'>Edit</Link>}
