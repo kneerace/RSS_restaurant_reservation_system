@@ -123,14 +123,15 @@ async function dateIsRestaurantClosedDate ( req, res, next){
     }
 // Phone validation
 async function isPhoneValid(req, res, next){
+  const validPhoneRegEx = /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/ ;
   const {mobile_number} = req.body.data;
-  if(isNaN(+mobile_number)){
-    return next({
-      status:400, 
-      message:`Phone number is not valid, please input digit.`,
-    })
+  if(mobile_number.match(validPhoneRegEx)[0]){
+    return next();
   }
-  next();
+  next({
+    status:400, 
+    message:`Phone number is not valid, please input digit.`,
+  });
 }
 
   async function reservationExists(req, res, next){
