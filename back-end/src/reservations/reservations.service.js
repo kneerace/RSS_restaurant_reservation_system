@@ -39,7 +39,8 @@ function read(reservation_id){
 function updateStatus(reservation_id,status){
     return knex("reservations")
         .where({reservation_id})
-        .update({status}, "*");
+        .update({status}, "status")
+        .then(data => data[0]);
 }
 
 function create(newReservation){
@@ -61,13 +62,29 @@ function update(reservationDetails){
             reservation_time: reservationDetails.reservation_time, 
             people: reservationDetails.people
         },"*");
-
 }
+
+function updateReser(reservation){
+    return knex("reservations")
+        .where({reservation_id:reservation.reservation_id})
+        .update({
+            first_name: reservation.first_name,
+            last_name: reservation.last_name,
+            mobile_number: reservation.mobile_number,
+            reservation_date: reservation.reservation_date,
+            reservation_time: reservation.reservation_time, 
+            people: reservation.people
+        },"*")
+        .then(data => data[0]);
+    }
+
+
 module.exports = {list,
     listByDate,
     listByMobileNumber,
     read,
     create,
     updateStatus,
-    update
+    update,
+    updateReser
     };
