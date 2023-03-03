@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { listTables,updateTableReservation, updateStatus } from "../utils/api";
+import { useHistory, useParams } from "react-router-dom";
+import { listTables,updateTableReservation } from "../utils/api";
 
 
 function AssignSeatToReservation({errorHandler}){
@@ -9,24 +9,25 @@ function AssignSeatToReservation({errorHandler}){
     const {reservation_id} = useParams();
 
     const [tables, setTables]= useState([]);
-    const[ tableError, setTablesError]= useState(null);
 
       // setting initial form data
-      const intialFormData = {table_id:"", reservation_id : reservation_id} ;
-      const [seat, setSeat] = useState({...intialFormData});
+      const intialFormData = {
+        table_id:""
+        , reservation_id : reservation_id
+    } ;
+    
+    const [seat, setSeat] = useState({...intialFormData});
 
     //fetching tables list
     useEffect(()=>{
         async function loadTables() {
           const abortController = new AbortController();
             try{
-                setTablesError(null);
                 const response = await listTables( abortController.signal);            
                  setTables(response);
             }
             catch(error){
-                // console.log('Error: ', error); //-------TODO 
-                setTablesError(error);
+                error && errorHandler(error);
             }
                 }
                 loadTables();
@@ -49,7 +50,7 @@ function AssignSeatToReservation({errorHandler}){
         } catch(error){
             error && errorHandler(error);
         }
-    }
+    };
 
     const handleCancel = (event)=>{
         event.preventDefault();

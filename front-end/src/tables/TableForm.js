@@ -1,7 +1,6 @@
-import React, { useState, useEffect} from "react";
-import {useHistory, useLocation} from "react-router-dom";
+import React, { useState} from "react";
+import {useHistory} from "react-router-dom";
 import { createTable } from "../utils/api";
-{/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> */}
 
 function TableForm({errorHandler}){
 

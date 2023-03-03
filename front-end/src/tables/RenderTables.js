@@ -1,6 +1,6 @@
 import React from "react";
-import {Link, useHistory} from "react-router-dom";
-import {updateStatus, resetTable} from "../utils/api";
+import { useHistory} from "react-router-dom";
+import {resetTable} from "../utils/api";
 import TableView from "./TableView";
 
 

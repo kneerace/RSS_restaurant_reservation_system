@@ -16,7 +16,7 @@ function ReservationForm({errorHandler}){
     reservation_date: "",
     reservation_time: "",
   }
-  const [reservation, setReservation] = useState(initialReservation);
+  const [reservation, setReservation] = useState("");
   const[editFlag, setEditFlag] = useState(false);
 
   //show initial form data
@@ -31,8 +31,8 @@ function ReservationForm({errorHandler}){
       }
     }
     newReservation();
-    // },[pathname]);
-    },[]);
+    },[pathname]);
+    // },[]);
     
     // record of change on filling form values
     function handleChange({target}){
@@ -89,7 +89,7 @@ function ReservationForm({errorHandler}){
                     name="first_name" 
                     id="first_name"
                     placeholder="First Name"
-                    classname="form-control" 
+                    className="form-control" 
                     onChange={handleChange} 
                     value={reservation.first_name}
                     required
@@ -104,7 +104,7 @@ function ReservationForm({errorHandler}){
                     name="last_name" 
                     id="last_name"
                     placeholder="Last Name"
-                    classname="form-control" 
+                    className="form-control" 
                     onChange={handleChange} 
                     value={reservation.last_name}required
                 />
