@@ -18,12 +18,12 @@ async function requestHasData(req, res, next){
       message: `Mising data from the request body.`,
     });
   }
-  if (Object.keys(req.body.data).length < 2){
-    return next({
-      status: 400,
-      message: `Request data has insufficient properties`,
-    })
-  }
+  // if (Object.keys(req.body.data).length < 2){
+  //   return next({
+  //     status: 400,
+  //     message: `Request data has insufficient properties`,
+  //   })
+  // }
   next();
 }
 // check if request has property and value
@@ -48,12 +48,22 @@ function isTableNameValid(req, res, next){
   if(res.locals.table_name.length < 2){
     return next({
       status: 400,
-      message:`Table Name Must be at least 2 Char in length`,
+      message:`table_name Must be at least 2 Char in length`,
     });
   }
   next();
 }
+ function isCapacityNumber(req, res, next){
+  const {capacity} = req.body.data;
 
+  if(typeof(capacity)!='number'){
+    return next({
+      status: 400, 
+      message: ` capacity should be numerical`,
+    })
+  }
+  next();
+ }
   // 2. is capacity valid 
 function isCapacityValid(req, res, next){
     res.locals.capacity = req.body.data.capacity;
@@ -144,7 +154,7 @@ async function isTableFree(req, res, next){
 
   if(table_reservation_id){
     return next({status: 400, 
-        message:`Table is Occupied`,
+        message:`Table is occupied`,
       })
   }
   // console.log("\t\n isTAbleReserved:::: ", table_reservation_id); //------------------
@@ -169,7 +179,7 @@ async function satisfyCapacity(req, res, next){
   
   if(people > capacity){
     return next({status: 400, 
-        message:`Table Capacity: ${capacity} is less than the number of people (${people}) in reservation`,
+        message:`Table capacity: ${capacity} is less than the number of people (${people}) in reservation`,
       })
   }
   // console.log("\t\n satisfyCapacity::: ", people, '  capacity:::', capacity); //-----------------
@@ -193,6 +203,7 @@ module.exports = {
     reqBodyHas("table_name"),
     reqBodyHas("capacity"),
     isTableNameValid,
+    isCapacityNumber,
     isCapacityValid,
     asyncErrorBoundary(create),
   ],
