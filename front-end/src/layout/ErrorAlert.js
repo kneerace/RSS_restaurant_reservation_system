@@ -11,7 +11,7 @@ import React,{useState, useEffect} from "react";
 function ErrorAlert({ error }) {
   const [ showError, setShowError]= useState("hide");
 
-  console.log(' CheckError ', error)
+  // console.log(' CheckError npm', error)
   useEffect (()=>{
     if(error){
       setShowError("show");
