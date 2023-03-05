@@ -70,7 +70,7 @@ function RenderReservations({reservations,errorHandler}){
                                 className=' card-button btn btn-outline-primary ml-1'>Edit</Link>}
                             </div>
                             <div className="col-4 px=2">
-                                { status == "booked" && <button className='card-button btn btn-danger'
+                                { status === "booked" && <button className='card-button btn btn-danger'
                                  data-reservation-id-cancel={reservation.reservation_id}
                                  onClick={handleCancel}>Cancel</button>}
                             </div>
