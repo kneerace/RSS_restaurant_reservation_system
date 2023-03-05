@@ -15,7 +15,7 @@ function TableForm({errorHandler}){
 
     // record of change on filling form values
     function handleChange({target}){
-        if(target.name === "people"){
+        if(target.name === "capacity"){
           setTable({...table, [target.name]:Number(target.value)});
         }
         else {
