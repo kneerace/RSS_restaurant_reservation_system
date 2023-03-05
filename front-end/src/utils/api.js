@@ -92,7 +92,7 @@ export async function createReservation(newReservation, signal){
  */
 
  export async function updateReservation(updatedReservation, signal){
-  const url = new URL(`${API_BASE_URL}/reservations`);
+  const url = new URL(`${API_BASE_URL}/reservations/${updatedReservation.reservation_id}`);
    const options = {
      method: "PUT",
      headers,
