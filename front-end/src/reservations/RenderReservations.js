@@ -62,12 +62,17 @@ function RenderReservations({reservations,errorHandler}){
                             <div className="col-4 px-2">
                                { status === "booked" && <Link to={`/reservations/${reservation_id}/seat`}
                                 className={`card-button btn btn-secondary`} id="reservation-id">Seat</Link>}
-                            </div>
+                            </div>                            
                             <div className="col-4 px-2">
                                 {status === "booked" && <Link to={{
                                     pathname:`reservations/${reservation_id}/edit`
-                                , state:{reservation}, }} 
-                                className=' card-button btn btn-outline-primary ml-1'>Edit</Link>}
+                                , state:{reservation}
+                                ,href:`reservations/${reservation_id}/edit`, }} 
+                                >
+                                    <button className='card-button btn btn-outline-primary ml-1'
+                                    href={`/reservations/${reservation.reservation_id}/edit`}
+                                //  {`href=reservations/${reservation_id}/edit`} 
+                                 >Edit</button></Link>}
                             </div>
                             <div className="col-4 px=2">
                                 { status === "booked" && <button className='card-button btn btn-danger'

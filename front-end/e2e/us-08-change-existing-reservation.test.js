@@ -150,7 +150,7 @@ describe("US-08 - Change an existing reservation - E2E", () => {
       const [cancelButton] = await page.$x(
         "//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'cancel')]"
       );
-
+      
       if (!cancelButton) {
         throw new Error("button containing cancel not found.");
       }

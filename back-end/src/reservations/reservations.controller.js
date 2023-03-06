@@ -225,7 +225,7 @@ async function updateReser(req, res, next){
 
 async function read(req, res, next){
   const {reservation_id} = req.params;
-  console.log('read:::: ', reservation_id, '  type::', typeof(reservation_id));
+  // console.log('read:::: ', reservation_id, '  type::', typeof(reservation_id));
   const  response =  await reservationsService.read(parseInt(reservation_id));
   if (response) {
     return res.status(200).json({data: response});
