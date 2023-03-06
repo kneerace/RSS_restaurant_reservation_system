@@ -82,6 +82,7 @@ function AssignSeatToReservation({errorHandler}){
                     <div className="col-md-4 col-lg-4 mb-3 text-center">
                         <select
                            className="form-control custom-select selectpicker show-tick"
+                           name="table_id"
                             onChange={handleChange} 
                             required >
                            <option value="">Select a Table:</option>

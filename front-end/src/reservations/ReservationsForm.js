@@ -5,6 +5,7 @@ import { createReservation,updateReservation } from "../utils/api";
 function ReservationForm({errorHandler}){
   // errorHandler(null);
   const history = useHistory();
+  // console.log('useLocation:: ', useLocation())
   const {pathname, state} = useLocation();
 
   // const today = new Date().toISOString().split("T")[0];
@@ -72,8 +73,7 @@ function ReservationForm({errorHandler}){
       history.goBack();
     }
 
-    return (
-        <div>
+    return <div>
           <div className="row">
                 <div className="col-12 text-center">
                   {editFlag ? <h1>Edit Reservation</h1> : <h1>New Reservation</h1>}
@@ -176,22 +176,19 @@ function ReservationForm({errorHandler}){
 
         <div className="row d-flex justify-content-center">
           <div className="col-lg-2 col-md-2  col-sm col-6 col">
-            <button type="submit" className="btn btn-primary form-control">
-                Submit
-            </button>
+            <button type="submit" className="btn btn-primary form-control"
+            >Submit</button>
           </div>
           <div className="col-lg-2 col-md-2  col-sm col-6 col">
-            <button type="button" className="btn btn-secondary form-control"
-            onClick={()=> handleCancel()}>
-                Cancel
-            </button>
+            <button id="button" type="button" value="cancel" className="btn btn-secondary form-control"
+            onClick={()=> handleCancel()}>Cancel</button>
           </div>
         </div>
         
 
     </form>
     </div>
-    );
+    
 }
 
 export default ReservationForm;
