@@ -44,4 +44,23 @@ Application has Four major sections as Dashboard, Search, New Reservation and Ne
 * This is the Table form where we can create Tables, with table name and capacity for that table. 
 
 ### Snippets
-![Dashboard with no Reservation](front-end/src/imges#:~:text=Dashboard_with_no_reservations.png)
+* Dashboard with No reservations
+![Dashboard with no Reservation](./front-end/src/imges/Dashboard_with_no_reservations.png)
+
+* Dashboard with reservations
+![Dashboard with Reservation](./front-end/src/imges/Dashboard_with_reservations.png)
+
+* New Reservation Form
+![New Reservation Form](./front-end/src/imges/NewReservation_LandingPage.png)
+
+* New Table Form
+![New Table Form](./front-end/src/imges/NewTable_Landing page.png)
+
+
+* Search Resulting No Output
+![Search without result](./front-end/src/imges/Search Landing page and no result for search.png)
+
+* Search Resulting Output
+![Search with result](./front-end/src/imges/Search Landing page with multiple entries.png)
+
+
