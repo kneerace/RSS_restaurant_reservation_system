@@ -1,6 +1,18 @@
 # Restaurant Reservation System - Periodic Table
 ## Applicaiton link : [Periodic Table Dashboard](https://rss-restaurant-reservation-system-frontend.vercel.app/dashboard)
 
+<details>
+  <summary> Table of Content </summary>
+  <ol>
+    <li> <a href="#about-the-project-and-application">About The Project and Application</a></li>
+    <li> <a href="#description">Description</a></li>
+    <li> <a href="#dashboard">Dashboard</a></li>
+    <li> <a href="#search">Search</a></li>
+    <li> <a href="#new-reservation">New Reservation</a></li>
+    <li> <a href="#new-table">New Table</a></li>
+    <li> <a href="#snippets">Snippets</a></li>
+  </ol>
+</details>
 ### About the Project and Application
 
 ### Description
@@ -28,8 +40,8 @@ Application has Four major sections as Dashboard, Search, New Reservation and Ne
 * Reservation time is between 10:30 AM to 09:30 PM.
 * On submission, we land back to Dashboard page where New reservation resides. 
 
-### New Tables
+### New Table
 * This is the Table form where we can create Tables, with table name and capacity for that table. 
 
-### Application Snippets
+### Snippets
 ![Dashboard with no Reservation](front-end/src/imges#:~:text=Dashboard_with_no_reservations.png)
