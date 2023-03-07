@@ -125,7 +125,7 @@ async function dateIsRestaurantClosedDate ( req, res, next){
 async function isPhoneValid(req, res, next){
   const validPhoneRegEx = /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/ ;
   const {mobile_number} = req.body.data;
-  if(mobile_number.match(validPhoneRegEx)[0]){
+  if(mobile_number.match(validPhoneRegEx)){
     return next();
   }
   next({
