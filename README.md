@@ -11,6 +11,7 @@
     <li> <a href="#new-reservation">New Reservation</a></li>
     <li> <a href="#new-table">New Table</a></li>
     <li> <a href="#snippets">Snippets</a></li>
+    <li> <a href="#built-with">Built With</a></li>
   </ol>
 </details>
 ### About the Project and Application
@@ -64,3 +65,32 @@ Application has Four major sections as Dashboard, Search, New Reservation and Ne
 ![Search with result](./front-end/src/imges/Search_Landingpage_with_multiple_entries.png)
 
 
+### Bult With
+* [![React Router][React-router.com]][React-router-url]
+* [![React][React.js]][React-url]
+* [![Node][Node.js]][Node-url]
+* [![Express][Express.js]][Express-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![Knex][Knex.org]][knex-url]
+* [![PostgreSQL][PostgreSQL.org]][PostgreSQL-url]
+* [![Vercel][Vercel.com]][Vercel-url]
+
+
+
+
+[Bootstrap.com]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/bootstrap.png
+[Bootstrap-url]: https://getbootstrap.com
+[React.js]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/react.png
+[React-url]: https://reactjs.org/
+[React-router.com]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/react-router.png
+[React-router-url]: https://reactrouter.com/en/main
+[Node.js]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/node.png
+[Node-url]: https://nodejs.org/en/
+[Express.js]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/Express.png
+[Express-url]: https://expressjs.com/
+[Knex.org]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/Knex.png
+[Knex-url]: https://knexjs.org/
+[PostgreSQL.org]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/PostgreSql.png
+[PostgreSQL-url]: https://www.postgresql.org/
+[Vercel.com]: https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/vercel.png
+[Vercel-url]: https://vercel.com/
