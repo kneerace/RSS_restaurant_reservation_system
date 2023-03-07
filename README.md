@@ -54,13 +54,13 @@ Application has Four major sections as Dashboard, Search, New Reservation and Ne
 ![New Reservation Form](./front-end/src/imges/NewReservation_LandingPage.png)
 
 * New Table Form
-![New Table Form](./front-end/src/imges/NewTable_Landing page.png)
+![New Table Form](./front-end/src/imges/NewTable_Landingpage.png)
 
 
 * Search Resulting No Output
-![Search without result](./front-end/src/imges/Search Landing page and no result for search.png)
+![Search without result](./front-end/src/imges/Search_Landingpage_with_no_result.png)
 
 * Search Resulting Output
-![Search with result](./front-end/src/imges/Search Landing page with multiple entries.png)
+![Search with result](./front-end/src/imges/Search_Landingpage_with_multiple_entries.png)
 
 
