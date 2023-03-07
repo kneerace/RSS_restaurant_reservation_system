@@ -14,8 +14,10 @@
     <li> <a href="#built-with">Built With</a></li>
   </ol>
 </details>
-### About the Project and Application
 
+### About the Project and Application
+<img src="https://github.com/kneerace/RSS_restaurant_reservation_system/blob/main/front-end/src/imges/Dashboard_with_reservations.png" width="600" />
+                                                                                                                                                 
 ### Description
 Restaurant Reservation System is a React based full stack application. This application helps in managing reservations with ability to create, edit, cancel reservations as well as create and fulfill tables. It also has features to search reservation based on mobile phone, which utilizes regex search pattern. 
 Application has Four major sections as Dashboard, Search, New Reservation and New Tables.
